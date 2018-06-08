@@ -4,7 +4,7 @@ App para cadastrar alunos e provas de alunos, utilizando a lib room android.
 - Java
 - Fragment
 - lib room
-- Delegate
+- Padrao Delegate
 - Material Design
 # link do curso  
 https://cursos.alura.com.br/course/persistencia-com-android-room
