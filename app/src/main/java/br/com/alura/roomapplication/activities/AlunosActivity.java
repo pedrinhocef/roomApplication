@@ -32,9 +32,18 @@ public class AlunosActivity extends AppCompatActivity implements AlunosDelegate 
         transaction.commit();
     }
 
-
     @Override
     public void lidaComClickFAB() {
         exibe(new FormularioAlunosFragment() , true);
+    }
+
+    @Override
+    public void voltaParaTelaAnterior() {
+        onBackPressed();
+    }
+
+    @Override
+    public void alteraNomeDaActivity(String nome) {
+        setTitle(nome);
     }
 }
