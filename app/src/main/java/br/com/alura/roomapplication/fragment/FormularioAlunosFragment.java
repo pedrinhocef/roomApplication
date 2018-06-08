@@ -9,12 +9,13 @@ import android.view.ViewGroup;
 
 import br.com.alura.roomapplication.R;
 
-public class ListaAlunoFragment extends Fragment {
+public class FormularioAlunosFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_lista, container, false);
+        View view = inflater.inflate(R.layout.fragment_formulario_alunos, container, false);
 
+        return view;
     }
 }
