@@ -10,7 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.Serializable;
+
 import br.com.alura.roomapplication.R;
+import br.com.alura.roomapplication.database.AlunoDAO;
+import br.com.alura.roomapplication.database.AluraDataBase;
+import br.com.alura.roomapplication.database.GeradorDeBancoDeDados;
 import br.com.alura.roomapplication.delegate.AlunosDelegate;
 import br.com.alura.roomapplication.models.Aluno;
 
@@ -34,8 +39,18 @@ public class FormularioAlunosFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_formulario_alunos, container, false);
 
         configuraComponontesDa(view);
+        colocaAlunoNaTelaSeNecessario();
 
         return view;
+    }
+
+    private void colocaAlunoNaTelaSeNecessario() {
+        Bundle argumentos = getArguments();
+        if (argumentos != null) {
+            this.aluno = (Aluno) argumentos.getSerializable("Aluno");
+            campoNome.setText(aluno.getNome());
+            campoEmail.setText(aluno.getEmail());
+        }
     }
 
     private void configuraComponontesDa(View view) {
@@ -47,11 +62,26 @@ public class FormularioAlunosFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 atualizaInformacoesDoAluno();
-                Toast.makeText(getContext(), aluno.getNome(), Toast.LENGTH_SHORT).show();
 
+                persisteAluno();
                 delegate.voltaParaTelaAnterior();
             }
         });
+    }
+
+    private void persisteAluno() {
+        GeradorDeBancoDeDados gerador = new GeradorDeBancoDeDados();
+        AlunoDAO alunoDAO = gerador.gera(getContext()).getAlunoDAO();
+
+        if (ehAlunoNovo()) {
+            alunoDAO.insere(aluno);
+        } else {
+            alunoDAO.altera(aluno);
+        }
+    }
+
+    private boolean ehAlunoNovo() {
+        return aluno.getId() == null;
     }
 
     private void atualizaInformacoesDoAluno() {
