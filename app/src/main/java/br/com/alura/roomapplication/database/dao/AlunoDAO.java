@@ -1,4 +1,4 @@
-package br.com.alura.roomapplication.database;
+package br.com.alura.roomapplication.database.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;

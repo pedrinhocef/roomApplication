@@ -8,25 +8,25 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import br.com.alura.roomapplication.R;
-import br.com.alura.roomapplication.delegate.AlunoDelegate;
-import br.com.alura.roomapplication.fragment.FormularioAlunosFragment;
-import br.com.alura.roomapplication.fragment.ListaAlunosFragment;
-import br.com.alura.roomapplication.models.Aluno;
+import br.com.alura.roomapplication.delegate.ProvasDelegate;
+import br.com.alura.roomapplication.fragment.FormularioProvasFragment;
+import br.com.alura.roomapplication.fragment.ListaProvasFragment;
+import br.com.alura.roomapplication.models.Prova;
 
-public class AlunosActivity extends AppCompatActivity implements AlunoDelegate {
+public class ProvasActivity extends AppCompatActivity implements ProvasDelegate {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alunos);
+        setContentView(R.layout.activity_provas);
 
-        exibe(new ListaAlunosFragment(), false);
+        exibe(new ListaProvasFragment(), false);
     }
 
     private void exibe(Fragment fragment, boolean empilhado) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.alunos_frame, fragment);
+        transaction.replace(R.id.provas_frame, fragment);
         if(empilhado) {
             transaction.addToBackStack(null);
         }
@@ -35,7 +35,7 @@ public class AlunosActivity extends AppCompatActivity implements AlunoDelegate {
 
     @Override
     public void lidaComClickFAB() {
-        exibe(new FormularioAlunosFragment() , true);
+        exibe(new FormularioProvasFragment() , true);
     }
 
     @Override
@@ -44,16 +44,17 @@ public class AlunosActivity extends AppCompatActivity implements AlunoDelegate {
     }
 
     @Override
-    public void alteraNomeDaActivity(String nome) {
-        setTitle(nome);
+    public void alteraNomeDaActivity(String materia) {
+        setTitle(materia);
     }
 
     @Override
-    public void lidaComAlunoSelecionado(Aluno aluno) {
-        FormularioAlunosFragment formulario = new FormularioAlunosFragment();
+    public void lidaComProvaSelecionado(Prova prova) {
+        FormularioProvasFragment formulario = new FormularioProvasFragment();
         Bundle argumentos = new Bundle();
-        argumentos.putSerializable("Aluno", aluno);
+        argumentos.putSerializable("Prova", prova);
         formulario.setArguments(argumentos);
         exibe(formulario, true);
     }
+
 }

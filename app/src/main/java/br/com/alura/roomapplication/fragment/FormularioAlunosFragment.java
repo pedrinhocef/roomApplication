@@ -8,15 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import java.io.Serializable;
 
 import br.com.alura.roomapplication.R;
-import br.com.alura.roomapplication.database.AlunoDAO;
-import br.com.alura.roomapplication.database.AluraDataBase;
 import br.com.alura.roomapplication.database.GeradorDeBancoDeDados;
-import br.com.alura.roomapplication.delegate.AlunosDelegate;
+import br.com.alura.roomapplication.database.dao.AlunoDAO;
+import br.com.alura.roomapplication.delegate.AlunoDelegate;
 import br.com.alura.roomapplication.models.Aluno;
 
 public class FormularioAlunosFragment extends Fragment {
@@ -24,12 +20,12 @@ public class FormularioAlunosFragment extends Fragment {
     private Aluno aluno = new Aluno();
     private EditText campoNome;
     private EditText campoEmail;
-    private AlunosDelegate delegate;
+    private AlunoDelegate delegate;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        delegate = (AlunosDelegate) getActivity();
+        delegate = (AlunoDelegate) getActivity();
         delegate.alteraNomeDaActivity("Cadastro de Aluno");
     }
 

@@ -2,7 +2,7 @@ package br.com.alura.roomapplication.delegate;
 
 import br.com.alura.roomapplication.models.Aluno;
 
-public interface AlunosDelegate {
+public interface AlunoDelegate {
 
     void lidaComClickFAB();
 

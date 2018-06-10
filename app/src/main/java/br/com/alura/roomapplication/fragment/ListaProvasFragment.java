@@ -16,19 +16,21 @@ import java.util.List;
 
 import br.com.alura.roomapplication.R;
 import br.com.alura.roomapplication.database.GeradorDeBancoDeDados;
-import br.com.alura.roomapplication.database.dao.AlunoDAO;
+import br.com.alura.roomapplication.database.dao.ProvaDAO;
 import br.com.alura.roomapplication.delegate.AlunoDelegate;
+import br.com.alura.roomapplication.delegate.ProvasDelegate;
 import br.com.alura.roomapplication.models.Aluno;
+import br.com.alura.roomapplication.models.Prova;
 
-public class ListaAlunosFragment extends Fragment {
+public class ListaProvasFragment extends Fragment {
 
-    private AlunoDelegate delegate;
+    private ProvasDelegate delegate;
     private FloatingActionButton botaoAdd;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        delegate = (AlunoDelegate) getActivity();
+        delegate = (ProvasDelegate) getActivity();
     }
 
     @Nullable
@@ -38,35 +40,35 @@ public class ListaAlunosFragment extends Fragment {
 
         final ListView lista = view.findViewById(R.id.fragment_lista);
 
-        final AlunoDAO alunoDAO = new GeradorDeBancoDeDados().gera(getContext()).getAlunoDAO();
-        List<Aluno> alunos = alunoDAO.buscaAluno();
+        final ProvaDAO provaDAO = new GeradorDeBancoDeDados().gera(getContext()).getProvaDAO();
+        List<Prova> provas = provaDAO.buscaProva();
 
-        final ArrayAdapter<Aluno> adapter =
-                new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, alunos);
+        final ArrayAdapter<Prova> adapter =
+                new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, provas);
         lista.setAdapter(adapter);
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Aluno aluno = (Aluno) lista.getItemAtPosition(position);
+                Prova prova = (Prova) lista.getItemAtPosition(position);
 
-                delegate.lidaComAlunoSelecionado(aluno);
+                delegate.lidaComProvaSelecionado(prova);
             }
         });
 
         lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final Aluno aluno = (Aluno) lista.getItemAtPosition(position);
+                final Prova prova = (Prova) lista.getItemAtPosition(position);
 
-                String mensagem = "Excluir Aluno " + aluno.getNome() + " ?";
+                String mensagem = "Excluir prova " + prova.getMateria() + " ?";
                 Snackbar.make(botaoAdd, mensagem ,Snackbar.LENGTH_LONG)
                         .setAction("Sim", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                alunoDAO.deleta(aluno);
-                                adapter.remove(aluno);
+                                provaDAO.deleta(prova);
+                                adapter.remove(prova);
                             }
                         })
                         .show();
@@ -94,6 +96,6 @@ public class ListaAlunosFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        delegate.alteraNomeDaActivity("Lista de Alunos");
+        delegate.alteraNomeDaActivity("Lista de Provas");
     }
 }
